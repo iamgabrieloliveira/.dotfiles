@@ -795,6 +795,7 @@ require('lazy').setup({
         javascriptreact = { 'prettierd', 'prettier', stop_after_first = true },
         ocaml = { 'ocamlformat' },
         php = { 'php-cs-fixer', 'pint', 'phpstan' },
+        json = { 'jq' },
       },
     },
   },
@@ -1173,6 +1174,10 @@ require('lazy').setup({
       vim.keymap.set('n', '-', '<cmd>Oil<CR>', { desc = 'Toggle [O]il' })
     end,
   },
+  -- {
+  --   'sphamba/smear-cursor.nvim',
+  --   opts = {},
+  -- },
   {
     'pmizio/typescript-tools.nvim',
     dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
