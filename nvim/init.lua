@@ -1,5 +1,4 @@
---[[
-=====================================================================
+--[[ =====================================================================
 ==================== READ THIS BEFORE CONTINUING ====================
 =====================================================================
 ========                                    .-----.          ========
@@ -209,7 +208,18 @@ vim.diagnostic.config {
   underline = true, -- Underline errors
   update_in_insert = false, -- Don’t update diagnostics while typing
   severity_sort = true, -- Prioritize errors
+  float = {
+    border = 'rounded',
+    focusable = true,
+  },
 }
+
+-- Copy file path to clipboard
+vim.api.nvim_create_user_command('CopyPath', function()
+  local path = vim.fn.expand '%:p'
+  vim.fn.setreg('+', path)
+  vim.notify('Copied "' .. path .. '" to the clipboard!')
+end, {})
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -482,6 +492,35 @@ require('lazy').setup({
     end,
   },
 
+  {
+    'nvimdev/lspsaga.nvim',
+    config = function()
+      require('lspsaga').setup {
+        symbol_in_winbar = {
+          enable = false,
+        },
+      }
+
+      vim.keymap.set('n', 'K', '<cmd>Lspsaga hover_doc<CR>')
+    end,
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter',
+    },
+  },
+
+  {
+    'aaronhallaert/advanced-git-search.nvim',
+    cmd = { 'AdvancedGitSearch' },
+    config = function()
+      require('advanced_git_search.fzf').setup {
+        -- Insert Config here
+      }
+    end,
+    dependencies = {
+      'ibhagwan/fzf-lua',
+    },
+  },
+
   -- LSP Plugins
   {
     -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
@@ -499,6 +538,13 @@ require('lazy').setup({
   {
     -- Main LSP Configuration
     'neovim/nvim-lspconfig',
+    opts = function(_, opts)
+      opts.diagnostics = {
+        float = {
+          border = 'rounded',
+        },
+      }
+    end,
     dependencies = {
       -- Automatically install LSPs and related tools to stdpath for Neovim
       { 'williamboman/mason.nvim', config = true }, -- NOTE: Must be loaded before dependants
@@ -542,6 +588,10 @@ require('lazy').setup({
       --    That is to say, every time a new file is opened that is associated with
       --    an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
       --    function will be executed to configure the current buffer
+
+      -- vim.cmd [[autocmd! ColorScheme * highlight NormalFloat guibg=#1f2335]]
+      -- vim.cmd [[autocmd! ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]]
+
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
         callback = function(event)
@@ -739,6 +789,11 @@ require('lazy').setup({
           end,
         },
       }
+
+      vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
+        border = 'rounded',
+        focusable = false,
+      })
     end,
   },
 
@@ -1088,6 +1143,15 @@ require('lazy').setup({
 
       vim.keymap.set('n', '<leader>nn', '<cmd>NoNeckPain<CR>', { desc = '[N]o [N]eck Pain Mode' })
     end,
+  },
+  {
+    'lukas-reineke/indent-blankline.nvim',
+    main = 'ibl',
+    ---@module "ibl"
+    ---@type ibl.config
+    opts = {
+      scope = { enabled = false },
+    },
   },
   {
     'numToStr/Comment.nvim',
