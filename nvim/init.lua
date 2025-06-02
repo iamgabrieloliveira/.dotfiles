@@ -202,6 +202,12 @@ vim.keymap.set('n', '<space>e', function()
   vim.diagnostic.open_float()
 end, { desc = 'Open diagnostics' })
 
+-- transparent background
+vim.api.nvim_set_hl(0, 'Normal', { bg = 'none' })
+vim.api.nvim_set_hl(0, 'NormalFloat', { bg = 'none' })
+vim.api.nvim_set_hl(0, 'FloatBorder', { bg = 'none' })
+vim.api.nvim_set_hl(0, 'Pmenu', { bg = 'none' })
+
 vim.diagnostic.config {
   virtual_text = true, -- Show errors as virtual text
   signs = true, -- Show signs in the gutter
@@ -1121,17 +1127,24 @@ require('lazy').setup({
   { 'mbbill/undotree' },
   { 'github/copilot.vim' },
   {
-    {
-      'CopilotC-Nvim/CopilotChat.nvim',
-      dependencies = {
-        { 'github/copilot.vim' }, -- or zbirenbaum/copilot.lua
-        { 'nvim-lua/plenary.nvim', branch = 'master' }, -- for curl, log and async functions
-      },
-      build = 'make tiktoken', -- Only on MacOS or Linux
-      opts = {
-        -- See Configuration section for options
-      },
-      -- See Commands section for default commands if you want to lazy load on them
+    'stevearc/aerial.nvim',
+    config = function()
+      require('aerial').setup {
+        -- optionally use on_attach to set keymaps when aerial has attached to a buffer
+        on_attach = function(bufnr)
+          -- Jump forwards/backwards with '{' and '}'
+          vim.keymap.set('n', '{', '<cmd>AerialPrev<CR>', { buffer = bufnr })
+          vim.keymap.set('n', '}', '<cmd>AerialNext<CR>', { buffer = bufnr })
+        end,
+      }
+      -- You probably also want to set a keymap to toggle aerial
+      vim.keymap.set('n', '<leader>a', '<cmd>AerialToggle!<CR>')
+    end,
+    opts = {},
+    -- Optional dependencies
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter',
+      'nvim-tree/nvim-web-devicons',
     },
   },
   {
