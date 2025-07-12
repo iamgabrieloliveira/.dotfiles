@@ -1,15 +1,16 @@
 #!/bin/bash
 
 WINDOWS_USER="olive"
+DOTFILES_DIR="/root/.dotfiles"
 
 KOMOREBI_CONFIG_WINDOWS_PATH="/mnt/c/Users/$WINDOWS_USER/komorebi.json"
 KOMOREBI_BAR_CONFIG_WINDOWS_PATH="/mnt/c/Users/$WINDOWS_USER/komorebi.bar.json"
 
-KOMOREBI_CONFIG_LOCAL_PATH="./komorebi.json"
-KOMOREBI_BAR_CONFIG_LOCAL_PATH="./komorebi.bar.json"
+KOMOREBI_CONFIG_LOCAL_PATH="$DOTFILES_DIR/komorebi/komorebi.json"
+KOMOREBI_BAR_CONFIG_LOCAL_PATH="$DOTFILES_DIR/komorebi/komorebi.bar.json"
 
 WHKDRC_WINDOWS_PATH="/mnt/c/Users/$WINDOWS_USER/.config/whkdrc"
-WHKDRC_LOCAL_PATH="./whkdrc"
+WHKDRC_LOCAL_PATH="$DOTFILES_DIR/komorebi/whkdrc"
 
 # update komorebi windows files
 if [ -f "$KOMOREBI_CONFIG_WINDOWS_PATH" ]; then
@@ -34,3 +35,4 @@ if [ -f "$WHKDRC_WINDOWS_PATH" ]; then
 else
 	echo "Whkdrc config file not found on Windows."
 fi
+

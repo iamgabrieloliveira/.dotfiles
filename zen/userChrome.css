@@ -1,0 +1,130 @@
+/* Hides the container info in url-bar */
+#userContext-label,
+#userContext-indicator,
+#userContext-icons {
+  display: none !important;
+}
+
+/* Kanagawa Dragon Theme for Zen Browser (userChrome.css) */
+
+/* 
+* This theme adapts the Kanagawa color palette for the Zen Firefox theme.
+  The primary inspiration is the "KanagawaDragon" variant.
+*/
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Core Background Colors */
+    --zen-main-browser-background: #181616 !important; /* KanagawaDragon Background */
+    --zen-colors-primary: #181616 !important;          /* KanagawaDragon Background for primary UI */
+    --zen-colors-secondary: #181616 !important;        /* KanagawaDragon Background */
+    --zen-colors-tertiary: #0d0c0c !important;         /* KanagawaDragon Black for the deepest areas */
+    --newtab-background-color: #181616 !important;
+    --lwt-sidebar-background-color: #181616 !important;
+    --arrowpanel-background: #181616 !important;
+    --zen-themed-toolbar-bg: #0d0c0c !important;
+    --toolbox-bgcolor-inactive: #0d0c0c !important;
+
+    /* Text and Icon Colors */
+    --lwt-text-color: #C8C093 !important;              /* KanagawaDragon Foreground */
+    --toolbar-field-color: #C8C093 !important;
+    --toolbar-field-focus-color: #C8C093 !important;
+    --newtab-text-primary-color: #C8C093 !important;
+    --arrowpanel-color: #C8C093 !important;
+    --sidebar-text-color: #C8C093 !important;
+    --lwt-sidebar-text-color: #C8C093 !important;
+    --tab-selected-textcolor: #8ba4b0 !important;      /* KanagawaDragon Blue for selected tab text */
+
+    /* Accent and Border Colors */
+    --zen-primary-color: #8ba4b0 !important;           /* KanagawaDragon Blue */
+    --zen-colors-border: #8ba4b0 !important;
+    --toolbarbutton-icon-fill: #C8C093 !important;     /* KanagawaDragon White/Foreground for icons */
+    --toolbar-color: #C8C093 !important;               /* Fallback text color */
+  }
+
+  /* Specific Element Styling */
+  #TabsToolbar,
+  hbox#titlebar,
+  #zen-appcontent-navbar-container {
+    background-color: #0d0c0c !important; /* Use darkest background for top bars */
+  }
+  
+  #urlbar-background {
+    background-color: #181616 !important; /* Darker input field */
+    border-color: #8ba4b0 !important;
+    border-width: 1px !important;
+    border-style: solid !important;
+  }
+
+  .urlbarView-url {
+    color: #7FB4CA !important; /* KanagawaDragon Bright Blue for URLs */
+  }
+
+  .tab-background[selected="true"] {
+    background-color: #223249 !important; /* KanagawaDragon Selection Background */
+  }
+
+  .content-shortcuts {
+    background-color: #181616 !important;
+    border-color: #8ba4b0 !important;
+  }
+
+  .sidebar-placesTree {
+    background-color: #181616 !important;
+  }
+
+  #zen-workspaces-button {
+    background-color: #181616 !important;
+  }
+
+  #zenEditBookmarkPanelFaviconContainer {
+    background: #0d0c0c !important;
+  }
+
+  /* Progress Bar Styling */
+  #zen-media-controls-toolbar #zen-media-progress-bar::-moz-range-track {
+    background: #223249 !important;
+  }
+
+  /* Container Tab Colors (mapped from KanagawaDragon palette) */
+  .identity-color-blue {
+    --identity-tab-color: #7FB4CA !important;
+    --identity-icon-color: #7FB4CA !important;
+  }
+
+  .identity-color-turquoise {
+    --identity-tab-color: #7AA89F !important;
+    --identity-icon-color: #7AA89F !important;
+  }
+
+  .identity-color-green {
+    --identity-tab-color: #87a987 !important;
+    --identity-icon-color: #87a987 !important;
+  }
+
+  .identity-color-yellow {
+    --identity-tab-color: #E6C384 !important;
+    --identity-icon-color: #E6C384 !important;
+  }
+
+  .identity-color-orange {
+    --identity-tab-color: #c4b28a !important;
+    --identity-icon-color: #c4b28a !important;
+  }
+
+  .identity-color-red {
+    --identity-tab-color: #E46876 !important;
+    --identity-icon-color: #E46876 !important;
+  }
+
+  .identity-color-pink {
+    --identity-tab-color: #a292a3 !important;
+    --identity-icon-color: #a292a3 !important;
+  }
+
+  .identity-color-purple {
+    --identity-tab-color: #8992a7 !important;
+    --identity-icon-color: #8992a7 !important;
+  }
+}
+
