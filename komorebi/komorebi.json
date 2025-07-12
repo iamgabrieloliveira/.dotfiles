@@ -3,8 +3,8 @@
   "app_specific_configuration_path": "$Env:USERPROFILE/applications.yaml",
   "window_hiding_behaviour": "Cloak",
   "cross_monitor_move_behaviour": "Insert",
-  "default_workspace_padding": 20,
-  "default_container_padding": 20,
+  "default_workspace_padding": 0,
+  "default_container_padding": 15,
   "border": false,
   "border_width": 8,
   "border_offset": -1,
@@ -14,6 +14,14 @@
     "monocle": "#ff3399",
     "unfocused": "#808080"
   },
+  "slow_application_compensation_time": 50,
+  "slow_application_identifiers": [
+    {
+      "id": "zen.exe",
+      "kind": "Exe",
+      "matching_strategy": "Equals"
+    }
+  ],
   "stackbar": {
     "height": 40,
     "mode": "OnStack",
@@ -54,6 +62,10 @@
         {
           "name": "VII",
           "layout": "RightMainVerticalStack"
+        },
+        {
+          "name": "VIII",
+          "layout": "Grid"
         }
       ]
     }

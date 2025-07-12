@@ -1,0 +1,166 @@
+/* Kanagawa Dragon Theme for Zen Browser (userContent.css) */
+
+/* This file styles the internal Firefox pages (about:newtab, about:preferences, etc.)
+   to match the KanagawaDragon theme.
+*/
+
+@media (prefers-color-scheme: dark) {
+
+  /* Common variables affecting all 'about:' pages */
+  @-moz-document url-prefix("about:") {
+    :root {
+      --in-content-page-color: #C8C093 !important; /* KanagawaDragon Foreground */
+      --color-accent-primary: #8ba4b0 !important; /* KanagawaDragon Blue */
+      --color-accent-primary-hover: #7FB4CA !important; /* KanagawaDragon Bright Blue */
+      --color-accent-primary-active: #7E9CD8 !important; /* KanagawaWave Blue for active state */
+      background-color: #181616 !important; /* KanagawaDragon Background */
+      --in-content-page-background: #181616 !important;
+    }
+  }
+
+  /* Variables and styles specific to about:newtab and about:home */
+  @-moz-document url("about:newtab"), url("about:home") {
+    :root {
+      --newtab-background-color: #181616 !important;
+      --newtab-background-color-secondary: #0d0c0c !important; /* KanagawaDragon Black */
+      --newtab-element-hover-color: #223249 !important; /* KanagawaDragon Selection Background */
+      --newtab-text-primary-color: #C8C093 !important;
+      --newtab-wordmark-color: #C8C093 !important;
+      --newtab-primary-action-background: #8ba4b0 !important;
+    }
+
+    .icon {
+      color: #8ba4b0 !important;
+    }
+
+    /* NOTE: The original theme used a specific logo for Catppuccin.
+      This has been commented out. You can replace the URL with a 
+      Kanagawa-themed logo or remove this block entirely.
+    
+    .search-wrapper .logo-and-wordmark .logo {
+      background: url("your-kanagawa-logo.svg") no-repeat center !important;
+      display: inline-block !important;
+      height: 82px !important;
+      width: 82px !important;
+      background-size: 82px !important;
+    }
+
+    @media (max-width: 609px) {
+      .search-wrapper .logo-and-wordmark .logo {
+        background-size: 64px !important;
+        height: 64px !important;
+        width: 64px !important;
+      }
+    }
+    */
+
+    .card-outer:is(:hover, :focus, .active):not(.placeholder) .card-title {
+      color: #8ba4b0 !important;
+    }
+
+    .top-site-outer .search-topsite {
+      background-color: #7FB4CA !important; /* KanagawaDragon Bright Blue */
+    }
+
+    .compact-cards .card-outer .card-context .card-context-icon.icon-download {
+      fill: #87a987 !important; /* KanagawaDragon Bright Green */
+    }
+  }
+
+  /* Variables and styles specific to about:preferences */
+  @-moz-document url-prefix("about:preferences") {
+    :root {
+      --zen-colors-tertiary: #0d0c0c !important;
+      --in-content-text-color: #C8C093 !important;
+      --link-color: #8ba4b0 !important;
+      --link-color-hover: #7FB4CA !important;
+      --zen-colors-primary: #181616 !important;
+      --in-content-box-background: #181616 !important;
+      --zen-primary-color: #8ba4b0 !important;
+    }
+
+    groupbox, moz-card {
+      background: #0d0c0c !important;
+    }
+
+    button,
+    groupbox menulist {
+      background: #223249 !important;
+      color: #C8C093 !important;
+    }
+
+    .main-content {
+      background-color: #181616 !important;
+    }
+
+    /* Container Tab Colors (mapped from KanagawaDragon palette) */
+    .identity-color-blue {
+      --identity-tab-color: #7FB4CA !important;
+      --identity-icon-color: #7FB4CA !important;
+    }
+
+    .identity-color-turquoise {
+      --identity-tab-color: #7AA89F !important;
+      --identity-icon-color: #7AA89F !important;
+    }
+
+    .identity-color-green {
+      --identity-tab-color: #87a987 !important;
+      --identity-icon-color: #87a987 !important;
+    }
+
+    .identity-color-yellow {
+      --identity-tab-color: #E6C384 !important;
+      --identity-icon-color: #E6C384 !important;
+    }
+
+    .identity-color-orange {
+      --identity-tab-color: #c4b28a !important;
+      --identity-icon-color: #c4b28a !important;
+    }
+
+    .identity-color-red {
+      --identity-tab-color: #E46876 !important;
+      --identity-icon-color: #E46876 !important;
+    }
+
+    .identity-color-pink {
+      --identity-tab-color: #a292a3 !important;
+      --identity-icon-color: #a292a3 !important;
+    }
+
+    .identity-color-purple {
+      --identity-tab-color: #8992a7 !important;
+      --identity-icon-color: #8992a7 !important;
+    }
+  }
+
+  /* Variables and styles specific to about:addons */
+  @-moz-document url-prefix("about:addons") {
+    :root {
+      --zen-dark-color-mix-base: #0d0c0c !important;
+      --background-color-box: #181616 !important;
+    }
+  }
+
+  /* Variables and styles specific to about:protections */
+  @-moz-document url-prefix("about:protections") {
+    :root {
+      --zen-primary-color: #181616 !important;
+      --social-color: #8992a7 !important; /* purple */
+      --coockie-color: #7FB4CA !important; /* blue */
+      --fingerprinter-color: #E6C384 !important; /* yellow */
+      --cryptominer-color: #a292a3 !important; /* pink/purple */
+      --tracker-color: #87a987 !important; /* green */
+      --in-content-primary-button-background-hover: #223249 !important;
+      --in-content-primary-button-text-color-hover: #C8C093 !important;
+      --in-content-primary-button-background: #0d0c0c !important;
+      --in-content-primary-button-text-color: #C8C093 !important;
+    }
+
+    .card {
+      background-color: #0d0c0c !important;
+    }
+  }
+}
+
