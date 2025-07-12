@@ -1,5 +1,5 @@
---[[ =====================================================================
-==================== READ THIS BEFORE CONTINUING ====================
+--[[ =====================================================================initinitinit
+==================== READ THIS BEFORE CONTINUING ====================init
 =====================================================================
 ========                                    .-----.          ========
 ========         .----------------------.   | === |          ========
@@ -87,6 +87,15 @@ P.S. You can delete this when you're done too. It's your config now! :)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+-- set laststatus=0
+-- hi! link StatusLine Normal
+-- hi! link StatusLineNC Normal
+-- set statusline=%{repeat('─',winwidth('.'))}
+
+-- remove status line
+vim.opt.laststatus = 0
+vim.opt.showtabline = 0
+
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 
@@ -115,7 +124,7 @@ vim.cmd [[
 -- Don't show the mode, since it's already in the status line
 vim.opt.showmode = false
 
--- Sync clipboard between OS and Neovim.
+-- Sync clipboard between OS and Neovim.init
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
@@ -214,6 +223,7 @@ vim.diagnostic.config {
   underline = true, -- Underline errors
   update_in_insert = false, -- Don’t update diagnostics while typing
   severity_sort = true, -- Prioritize errors
+  -- virtual_lines = { current_line = true },
   float = {
     border = 'rounded',
     focusable = true,
@@ -638,11 +648,11 @@ require('lazy').setup({
 
           -- Rename the variable under your cursor.
           --  Most Language Servers support renaming across files, etc.
-          map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+          map('<leader>rn', '<cmd>Lspsaga rename<CR>', '[R]e[n]ame')
 
           -- Execute a code action, usually your cursor needs to be on top of an error
           -- or a suggestion from your LSP for this to activate.
-          map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction', { 'n', 'x' })
+          map('<leader>ca', '<cmd>Lspsaga code_action<CR>', '[C]ode [A]ction', { 'n', 'x' })
 
           -- WARN: This is not Goto Definition, this is Goto Declaration.
           --  For example, in C this would take you to the header.
@@ -697,6 +707,10 @@ require('lazy').setup({
           diagnostic_signs[vim.diagnostic.severity[type]] = icon
         end
         vim.diagnostic.config { signs = { text = diagnostic_signs } }
+      else
+        -- If you don't have a Nerd Font, you can use the default symbols
+        --  See `:help diagnostic-signs`
+        vim.diagnostic.config { signs = true }
       end
 
       -- LSP servers and clients are able to communicate to each other what features they support.
@@ -795,6 +809,8 @@ require('lazy').setup({
           end,
         },
       }
+
+      require('lspconfig').gleam.setup {}
 
       vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
         border = 'rounded',
@@ -981,8 +997,207 @@ require('lazy').setup({
     name = 'catppuccin',
     priority = 1000,
     init = function()
+      require('catppuccin').setup {
+        flavour = 'mocha', -- latte, frappe, macchiato, mocha
+        background = { -- :h background
+          light = 'latte',
+          dark = 'mocha',
+        },
+        transparent_background = false, -- disables setting the background color.
+        show_end_of_buffer = false, -- shows the '~' characters after the end of buffers
+        term_colors = false, -- sets terminal colors (e.g. `g:terminal_color_0`)
+        dim_inactive = {
+          enabled = false, -- dims the background color of inactive window
+          shade = 'dark',
+          percentage = 0.15, -- percentage of the shade to apply to the inactive window
+        },
+        no_italic = true,
+        no_bold = true, -- Force no bold
+        no_underline = false, -- Force no underline
+        styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
+          comments = { 'italic' }, -- Change the style of comments
+          conditionals = { 'italic' },
+          loops = {},
+          functions = {},
+          keywords = {},
+          strings = {},
+          variables = {},
+          numbers = {},
+          booleans = {},
+          properties = {},
+          types = {},
+          operators = {},
+          -- miscs = {}, -- Uncomment to turn off hard-coded styles
+        },
+        color_overrides = {},
+        custom_highlights = {},
+        default_integrations = true,
+        integrations = {
+          cmp = true,
+          gitsigns = true,
+          nvimtree = true,
+          treesitter = true,
+          notify = false,
+          mini = {
+            enabled = true,
+            indentscope_color = '',
+          },
+          -- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
+        },
+      }
+
       -- vim.o.background = 'light'
-      vim.cmd [[colorscheme catppuccin]]
+      -- vim.cmd [[colorscheme catppuccin-latte]]
+    end,
+  },
+  {
+    'rose-pine/neovim',
+    name = 'rose-pine',
+    init = function()
+      require('rose-pine').setup {
+        variant = 'main', -- auto, main, moon, or dawn
+        dark_variant = 'main', -- main, moon, or dawn
+        dim_inactive_windows = false,
+        extend_background_behind_borders = true,
+
+        enable = {
+          terminal = true,
+          legacy_highlights = true, -- Improve compatibility for previous versions of Neovim
+          migrations = true, -- Handle deprecated options automatically
+        },
+
+        styles = {
+          bold = false,
+          italic = false,
+          transparency = false,
+        },
+
+        groups = {
+          border = 'muted',
+          link = 'iris',
+          panel = 'surface',
+
+          error = 'love',
+          hint = 'iris',
+          info = 'foam',
+          note = 'pine',
+          todo = 'rose',
+          warn = 'gold',
+
+          git_add = 'foam',
+          git_change = 'rose',
+          git_delete = 'love',
+          git_dirty = 'rose',
+          git_ignore = 'muted',
+          git_merge = 'iris',
+          git_rename = 'pine',
+          git_stage = 'iris',
+          git_text = 'rose',
+          git_untracked = 'subtle',
+
+          h1 = 'iris',
+          h2 = 'foam',
+          h3 = 'rose',
+          h4 = 'gold',
+          h5 = 'pine',
+          h6 = 'foam',
+        },
+
+        palette = {
+          -- Override the builtin palette per variant
+          -- moon = {
+          --     base = '#18191a',
+          --     overlay = '#363738',
+          -- },
+        },
+
+        -- NOTE: Highlight groups are extended (merged) by default. Disable this
+        -- per group via `inherit = false`
+        highlight_groups = {
+          -- Comment = { fg = "foam" },
+          -- StatusLine = { fg = "love", bg = "love", blend = 15 },
+          -- VertSplit = { fg = "muted", bg = "muted" },
+          -- Visual = { fg = "base", bg = "text", inherit = false },
+        },
+
+        before_highlight = function(group, highlight, palette)
+          -- Disable all undercurls
+          -- if highlight.undercurl then
+          --     highlight.undercurl = false
+          -- end
+          --
+          -- Change palette colour
+          -- if highlight.fg == palette.pine then
+          --     highlight.fg = palette.foam
+          -- end
+        end,
+      }
+
+      -- vim.o.background = 'dark'
+      -- vim.cmd [[colorscheme rose-pine]]
+    end,
+  },
+  {
+    'EdenEast/nightfox.nvim',
+    opts = {
+      options = {
+        styles = {
+          comments = 'italic',
+          keywords = 'bold',
+          functions = 'bold',
+          variables = 'bold',
+        },
+      },
+    },
+    config = function()
+      -- vim.o.background = 'dark'
+      -- vim.cmd [[colorscheme nightfox]]
+    end,
+  },
+  {
+    'rebelot/kanagawa.nvim',
+    init = function()
+      require('kanagawa').setup {
+        compile = false, -- enable compiling the colorscheme
+        undercurl = false, -- enable undercurls
+        commentStyle = { italic = false },
+        functionStyle = {},
+        keywordStyle = { italic = false },
+        statementStyle = { bold = true },
+        typeStyle = {},
+        transparent = true, -- do not set background color
+        dimInactive = false, -- dim inactive window `:h hl-NormalNC`
+        terminalColors = true, -- define vim.g.terminal_color_{0,17}
+        overrides = function()
+          return {
+            ['@variable.builtin'] = { italic = false },
+          }
+        end,
+        theme = 'dragon', -- Load "wave" theme
+        background = { -- map the value of 'background' option to a theme
+          dark = 'dragon', -- try "dragon" !
+          light = 'lotus',
+        },
+        colors = {
+          theme = {
+            all = {
+              ui = {
+                bg_gutter = 'none',
+              },
+            },
+          },
+        },
+      }
+
+      vim.o.background = 'dark'
+      vim.cmd [[colorscheme kanagawa]]
+    end,
+  },
+  {
+    'navarasu/onedark.nvim',
+    init = function()
+      -- vim.o.background = 'dark'
+      -- vim.cmd [[colorscheme onedark]]
     end,
   },
   {
@@ -992,11 +1207,11 @@ require('lazy').setup({
         -- (note: if your configuration sets vim.o.background the following option will do nothing!)
         transparent = true, -- Boolean: Sets the background to transparent
         italics = {
-          comments = true, -- Boolean: Italicizes comments
-          keywords = true, -- Boolean: Italicizes keywords
-          functions = true, -- Boolean: Italicizes functions
-          strings = true, -- Boolean: Italicizes strings
-          variables = true, -- Boolean: Italicizes variables
+          comments = false, -- Boolean: Italicizes comments
+          keywords = false, -- Boolean: Italicizes keywords
+          functions = false, -- Boolean: Italicizes functions
+          strings = false, -- Boolean: Italicizes strings
+          variables = false, -- Boolean: Italicizes variables
         },
         overrides = {}, -- A dictionary of group names, can be a function returning a dictionary or a table.
       }
@@ -1019,23 +1234,57 @@ require('lazy').setup({
     end,
   },
   {
+    'webhooked/kanso.nvim',
+    lazy = false,
+    priority = 1000,
+
+    init = function()
+      -- Default options:
+      require('kanso').setup {
+        bold = true, -- enable bold fonts
+        italics = false, -- enable italics
+        compile = false, -- enable compiling the colorscheme
+        undercurl = true, -- enable undercurls
+        commentStyle = { italic = true },
+        functionStyle = {},
+        keywordStyle = { italic = true },
+        statementStyle = {},
+        typeStyle = {},
+        transparent = false, -- do not set background color
+        dimInactive = false, -- dim inactive window `:h hl-NormalNC`
+        terminalColors = true, -- define vim.g.terminal_color_{0,17}
+        colors = { -- add/modify theme and palette colors
+          palette = {},
+          theme = { zen = {}, pearl = {}, ink = {}, all = {} },
+        },
+        overrides = function(colors) -- add/modify highlights
+          return {}
+        end,
+        theme = 'ink', -- Load "zen" theme
+        background = { -- map the value of 'background' option to a theme
+          dark = 'ink', -- try "ink" !
+          light = 'pearl', -- try "mist" !
+        },
+      }
+
+      -- vim.cmd [[colorscheme kanso]]
+    end,
+  },
+  {
     'ellisonleao/gruvbox.nvim',
     priority = 1000,
     init = function()
-      -- vim.o.background = 'light'
-      -- vim.cmd [[colorscheme gruvbox]]
-
       require('gruvbox').setup {
-        terminal_colors = true, -- add neovim terminal colors
+        terminal_colors = false, -- add neovim terminal colors
         undercurl = true,
         underline = true,
         bold = true,
         italic = {
-          strings = true,
-          emphasis = true,
-          comments = true,
+          strings = false,
+          emphasis = false,
+          comments = false,
           operators = false,
-          folds = true,
+          folds = false,
         },
         strikethrough = true,
         invert_selection = false,
@@ -1045,10 +1294,15 @@ require('lazy').setup({
         inverse = true, -- invert background for search, diffs, statuslines and errors
         contrast = 'soft', -- can be "hard", "soft" or empty string
         palette_overrides = {},
-        overrides = {},
+        overrides = {
+          SignColumn = { bg = 'none' },
+        },
         dim_inctive = false,
         transparent_mode = false,
       }
+
+      -- vim.o.background = 'light'
+      -- vim.cmd [[colorscheme gruvbox]]
     end,
   },
 
@@ -1111,11 +1365,11 @@ require('lazy').setup({
       require('vesper').setup {
         transparent = false, -- Boolean: Sets the background to transparent
         italics = {
-          comments = true, -- Boolean: Italicizes comments
-          keywords = true, -- Boolean: Italicizes keywords
-          functions = true, -- Boolean: Italicizes functions
-          strings = true, -- Boolean: Italicizes strings
-          variables = true, -- Boolean: Italicizes variables
+          comments = false, -- Boolean: Italicizes comments
+          keywords = false, -- Boolean: Italicizes keywords
+          functions = false, -- Boolean: Italicizes functions
+          strings = false, -- Boolean: Italicizes strings
+          variables = false, -- Boolean: Italicizes variables
         },
         overrides = {}, -- A dictionary of group names, can be a function returning a dictionary or a table.
         palette_overrides = {},
@@ -1151,7 +1405,7 @@ require('lazy').setup({
     'shortcuts/no-neck-pain.nvim',
     config = function()
       require('no-neck-pain').setup {
-        width = 130,
+        width = 160,
       }
 
       vim.keymap.set('n', '<leader>nn', '<cmd>NoNeckPain<CR>', { desc = '[N]o [N]eck Pain Mode' })
@@ -1160,6 +1414,7 @@ require('lazy').setup({
   {
     'lukas-reineke/indent-blankline.nvim',
     main = 'ibl',
+    enabled = false,
     ---@module "ibl"
     ---@type ibl.config
     opts = {
@@ -1258,11 +1513,53 @@ require('lazy').setup({
   {
     'pmizio/typescript-tools.nvim',
     dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
-    opts = {},
-
+    opts = {
+      settings = {
+        tsserver = {
+          tsserver_max_memory = 'auto',
+        },
+      },
+    },
     config = function()
       vim.keymap.set('n', '<leader>ri', '<cmd>TSToolsAddMissingImports<CR>', { desc = 'Add Missing [I]mports' })
     end,
+  },
+  {
+    'windwp/nvim-autopairs',
+    event = 'InsertEnter',
+    config = true,
+    -- use opts = {} for passing setup options
+    -- this is equivalent to setup({}) function
+  },
+  {
+    'windwp/nvim-ts-autotag',
+    config = true,
+    -- use opts = {} for passing setup options
+    -- this is equivalent to setup({}) function
+  },
+  {
+    'Julian/lean.nvim',
+    event = { 'BufReadPre *.lean', 'BufNewFile *.lean' },
+
+    dependencies = {
+      'neovim/nvim-lspconfig',
+      'nvim-lua/plenary.nvim',
+
+      -- optional dependencies:
+
+      -- a completion engine
+      --    hrsh7th/nvim-cmp or Saghen/blink.cmp are popular choices
+
+      -- 'nvim-telescope/telescope.nvim', -- for 2 Lean-specific pickers
+      -- 'andymass/vim-matchup',          -- for enhanced % motion behavior
+      -- 'andrewradev/switch.vim',        -- for switch support
+      -- 'tomtom/tcomment_vim',           -- for commenting
+    },
+
+    ---@type lean.Config
+    opts = { -- see below for full configuration options
+      mappings = true,
+    },
   },
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
